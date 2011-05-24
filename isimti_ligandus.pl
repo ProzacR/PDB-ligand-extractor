@@ -17,14 +17,21 @@ while (@lines[$n]) {
   @eilute = split(' ', @lines[$n]);
   push(@eilute, "\n");
   if (($eilute[0] eq "HETATM") && !(grep {$_ eq $eilute[3]} @ismesti)) {
-    $i++;
-    if (($eilute[3] ne $paimtas_ligandas) && ($i != 1)) {
-    writepdb();
-    $i = 0;
+    if ($i == 0) {
+      $paimtas_ligandas = $eilute[3];
+    }
+    if ($eilute[3] ne $paimtas_ligandas) {
+      writepdb();
+      $i = 0;
     }
     @HETATM[$i] = @lines[$n]; #join(' ', @eilute); Avogadro likes empty spaces
-    $paimtas_ligandas = $eilute[3];
-    }
+    $i++;
+    } else {
+     if ($i != 0) {
+       writepdb();
+     }
+     $i = 0;
+   }
   $n++;
 }
 
