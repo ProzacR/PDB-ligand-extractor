@@ -3,14 +3,20 @@
 #take ligands from pdb and save into pdb
 
 #here ignored ligands array
-@ismesti = (HOH, HG, ZN);
+@ismesti = (HOH, HG, ZN, CO, CU, NI, SO3, SO4, DOD, CL, OH, CO2);
 
-#read file
-open FILE, "<@ARGV[0]" or die $!;
-my @lines = <FILE>;
+#main
+$x=0;
+while (@ARGV[$x]) {
+open FILE, "<@ARGV[$x]" or die $!;
+print "\nFrom ", @ARGV[$x], ":";
+@lines = <FILE>;
+selectligands();
 close(FILE);
+$x++;
+}
 
-#select ligands
+sub selectligands {
 $n=0;
 $i=0;
 while (@lines[$n]) {
@@ -34,9 +40,11 @@ while (@lines[$n]) {
    }
   $n++;
 }
+@lines = '';
+}
 
 sub writepdb {
-print $paimtas_ligandas, "\n";
+print " ", $paimtas_ligandas, ",";
 $name = "${paimtas_ligandas}.pdb";
 open (FILE, ">$name");
 print FILE @HETATM;
