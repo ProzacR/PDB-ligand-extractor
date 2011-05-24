@@ -1,16 +1,16 @@
 #!/usr/bin/perl
-#
-#isimti ligandus is pdb ir isaugoti i pdb
+#VR
+#take ligands from pdb and save into pdb
 
-#cia surasyti ligandus kuriuos ismesti
-@ismesti = (HOH, HG);
+#here ignored ligands array
+@ismesti = (HOH, HG, ZN);
 
-#nuskaitom faila
+#read file
 open FILE, "<@ARGV[0]" or die $!;
 my @lines = <FILE>;
 close(FILE);
 
-#atrenkam ko reikia
+#select ligands
 $n=0;
 $i=0;
 while (@lines[$n]) {
@@ -22,13 +22,12 @@ while (@lines[$n]) {
     writepdb();
     $i = 0;
     }
-    @HETATM[$i] = @lines[$n]; #join(' ', @eilute); Avogadro megsta tarpus
+    @HETATM[$i] = @lines[$n]; #join(' ', @eilute); Avogadro likes empty spaces
     $paimtas_ligandas = $eilute[3];
     }
   $n++;
 }
 
-#TODO: kolkas visus tinkamus suveda i viena faila, tai nelabai galima naudot *.pdb
 sub writepdb {
 print $paimtas_ligandas, "\n";
 $name = "${paimtas_ligandas}.pdb";
