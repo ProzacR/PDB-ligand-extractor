@@ -36,8 +36,8 @@ while (@all_domains[$n]) {
 $tipas = @all_domains[$n]->type;
 if (!(grep {$_ eq $tipas} @ismesti)) {
 #taip galima israsyti ka reikia
-print $tipas, " ";
-@all_domains[$n]->write("ligandai/${tipas}.pdb", noid => 1);
+print $tipas, "_", $n, " ";
+@all_domains[$n]->write("ligandai/${tipas}_${x}_${n}.pdb", noid => 1);
 }
 $n++;
 }
