@@ -7,7 +7,10 @@ use Chemistry::MacroMol;
 use Chemistry::File::PDB;
 
 #aminor. t.t.
-@ismesti = (" ZN", " HG", DMS, HOH,
+@ismesti = (" ZN", " HG", DMS, HOH, SCN, SO3, SO4, DOD, H2S,
+NO3, XE, RU,
+MMC, AUC, IOD, GOL,
+" BR", " CL", " CO", CO2, " CU", " MN", " NA", " NI", " OH",
 TRP, GLY, TYR, LYS, HIS, PRO, GLU, ASN, ASP, PHE, ILE, ALA,
 ARG, ASP, SER, ASN, VAL, GLN, THR, LEU, CYS, MET);
 
