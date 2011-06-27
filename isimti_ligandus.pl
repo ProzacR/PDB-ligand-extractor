@@ -7,14 +7,19 @@ use Chemistry::MacroMol;
 use Chemistry::File::PDB;
 
 #aminor. t.t.
-@ismesti = (" ZN", " HG", HOH, TRP, GLY, TYR, LYS, HIS, PRO, GLU, ASN, ASP, PHE, ILE, ALA,
+@ismesti = (" ZN", " HG", DMS, HOH,
+TRP, GLY, TYR, LYS, HIS, PRO, GLU, ASN, ASP, PHE, ILE, ALA,
 ARG, ASP, SER, ASN, VAL, GLN, THR, LEU, CYS, MET);
+
+if(!-d "ligandai") {
+mkdir("ligandai", 0777);
+}
 
 #main
 $x=0;
 while (@ARGV[$x]) {
 $macromol = Chemistry::MacroMol->read("@ARGV[$x]") or die $!;
-print "\nFrom ", @ARGV[$x], ":";
+print "\nFrom ", @ARGV[$x], ": ";
 selectligands();
 $x++;
 }
@@ -23,14 +28,15 @@ sub selectligands {
 @all_domains = $macromol->domains;
 $n = 0;
 
-#visus reik isnagrineti ne tik 2 ir rasti ka imti ka ne
+#visus domenus reikia isnagrineti ir rasti ka imti ka ne
 while (@all_domains[$n]) {
 $tipas = @all_domains[$n]->type;
 if (!(grep {$_ eq $tipas} @ismesti)) {
 #taip galima israsyti ka reikia
-print $tipas, " ,";
-@all_domains[$n]->write("out.pdb", noid => 1);
+print $tipas, " ";
+@all_domains[$n]->write("ligandai/${tipas}.pdb", noid => 1);
 }
 $n++;
 }
+print "\n";
 }
