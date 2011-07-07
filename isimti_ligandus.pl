@@ -9,8 +9,12 @@ use Chemistry::File::PDB;
 #aminor. t.t.
 @ismesti = (" ZN", " HG", DMS, HOH, SCN, SO3, SO4, DOD, H2S,
 NO3, " XE", " RU", "3CO", AZI, CCN, CMH, CNN, HGB, UNX, MBO,
-MMC, AUC, IOD, GOL, BE7, BCT,
+MMC, AUC, IOD, GOL, BE7, BCT, ACE, ACT, EDO, TRS,
+#organomet:
+B30, AMS, BON,
+#kt.:
 " BR", " CL", " CO", CO2, " CU", " MN", " NA", " NI", " OH",
+#a.r.:
 TRP, GLY, TYR, LYS, HIS, PRO, GLU, ASN, ASP, PHE, ILE, ALA,
 ARG, ASP, SER, ASN, VAL, GLN, THR, LEU, CYS, MET);
 
