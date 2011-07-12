@@ -14,6 +14,8 @@ MMC, AUC, IOD, GOL, BE7, BCT, ACE, ACT, EDO, TRS, OXY, KCS,
 BME, HTS, TH0, TH7,
 #organomet:
 B30, AMS, BON,
+#per daug konformaciju
+0CR, 1CR, DT9, EG1, EG3, 4TR,
 #kt.:
 " BR", " CL", " CO", CO2, " CU", " MN", " NA", " NI", " OH",
 #a.r.:
