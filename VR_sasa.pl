@@ -9,6 +9,13 @@ use Math::Trig;
 use Data::Dumper;
 
 
+#Atomic radii
+$radii['H']=1.20;
+$radii['C']=1.70;
+$radii['N']=1.55;
+$radii['O']=1.52;
+
+
 ##read pdb file
 #take file name
 if (@ARGV == 1) {
@@ -91,8 +98,8 @@ $atom[$x]{'charge'} = join "", @{$atoms[$x]}[78..79];
 
 $x++;
 }
-
 #print Dumper \@atom;
+
 
 #H2O radius:
 $prad=1.4;
@@ -105,17 +112,17 @@ $M=500;
 #set atom new way, find radius
 $x = 0;
 while ($atom[$x]) {
-$N[$x] = [$atom[$x]{'x'},$atom[$x]{'y'},$atom[$x]{'z'},$atom[$x]{'element'}];
+$N[$x] = [$atom[$x]{'x'},$atom[$x]{'y'},$atom[$x]{'z'},$radii[$atom[$x]{'element'}]];
 $x++;
 }
-print "atomas: ", Dumper \@N[0];
+#print "atomas: ", $N[0][0];
 
 
 $i = 0;
 $irad = 0;
 
 while(@N[$i]) {
- print "skersmuo: ", $N[$i][3];
+ #print "skersmuo: ", $N[$i][3];
  $irad=$N[$i][3] + $prad;
  while ($k<$M) {
   $u=rand();
@@ -169,4 +176,4 @@ $k = 0;
 }
 
 print "sasa: \n";
-#print Dumper \@sasa;
+print Dumper \@sasa;
