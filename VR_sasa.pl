@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
 # SASA using Shrake-Rupley algorithm
-# calculate Solvent Accessible Surface Area
+# calculate vapor to water free energy of transfer
+# using Solvent Accessible Surface Area
 # SASA
 # VR 2013
 
@@ -17,7 +18,7 @@ $radii{'O'}=1.52;
 
 
 #solvation parameter
-$solv_par{'H'}=0; #?
+$solv_par{'H'}=0;
 $solv_par{'C'}=12;
 $solv_par{'N'}=-116;
 $solv_par{'O'}=-116;
@@ -112,7 +113,7 @@ $x++;
 $prad=1.4;
 
 #tasku sk. aplink atomus (daugiau tiksliau: ~simtai):
-$M=500;
+$M=5000;
 
 #atoms example 0,1,...  (x,y,z,radius,solvation parameter):
 #@N[0] = [1,2,3,4,5];
@@ -122,7 +123,7 @@ while ($atom[$x]) {
 $N[$x] = [$atom[$x]{'x'},$atom[$x]{'y'},$atom[$x]{'z'},$radii{$atom[$x]{'element'}},$solv_par{$atom[$x]{'element'}}];
 $x++;
 }
-print Dumper \@N;
+#print Dumper \@N;
 
 
 $i = 0;
@@ -191,7 +192,7 @@ while ($sasa[$x]) {
 $E=$E+$sasa[$x]*$N[$x][4];
 $x++;
 }
-print "solvation energy: ", $E, "\n";
+print "solvation energy: ", $E/1000, " kcal/mol\n";
 
 
 # Perl trim function to remove whitespace from the start and end of the string
