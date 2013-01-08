@@ -10,10 +10,17 @@ use Data::Dumper;
 
 
 #Atomic radii
-$radii['H']=1.20;
-$radii['C']=1.70;
-$radii['N']=1.55;
-$radii['O']=1.52;
+$radii{'H'}=1.20;
+$radii{'C'}=1.70;
+$radii{'N'}=1.55;
+$radii{'O'}=1.52;
+
+
+#solvation parameter
+$solv_par{'H'}=0; #?
+$solv_par{'C'}=12;
+$solv_par{'N'}=-116;
+$solv_par{'O'}=-116;
 
 
 ##read pdb file
@@ -91,7 +98,7 @@ $atom[$x]{'temp_factor'} = join "", @{$atoms[$x]}[60..65];
 $atom[$x]{'segment'} = join "", @{$atoms[$x]}[72..75];
 
 #77 - 78        LString(2)      Element symbol, right-justified.      
-$atom[$x]{'element'} = join "", @{$atoms[$x]}[76..77];
+$atom[$x]{'element'} = trim(join "", @{$atoms[$x]}[76..77]);
 
 #79 - 80        LString(2)      Charge on the atom.  
 $atom[$x]{'charge'} = join "", @{$atoms[$x]}[78..79];
@@ -107,15 +114,15 @@ $prad=1.4;
 #tasku sk. aplink atomus (daugiau tiksliau: ~simtai):
 $M=500;
 
-#atoms example 0,1,...  (x,y,z,radius):
-#@N[0] = [1,2,3,4];
+#atoms example 0,1,...  (x,y,z,radius,solvation parameter):
+#@N[0] = [1,2,3,4,5];
 #set atom new way, find radius
 $x = 0;
 while ($atom[$x]) {
-$N[$x] = [$atom[$x]{'x'},$atom[$x]{'y'},$atom[$x]{'z'},$radii[$atom[$x]{'element'}]];
+$N[$x] = [$atom[$x]{'x'},$atom[$x]{'y'},$atom[$x]{'z'},$radii{$atom[$x]{'element'}},$solv_par{$atom[$x]{'element'}}];
 $x++;
 }
-#print "atomas: ", $N[0][0];
+print Dumper \@N;
 
 
 $i = 0;
@@ -174,6 +181,24 @@ while(@N[$i]) {
 $i++;
 $k = 0;
 }
+#print "sasa: \n";
+#print Dumper \@sasa;
 
-print "sasa: \n";
-print Dumper \@sasa;
+
+#solvation energy:
+$x=0;
+while ($sasa[$x]) {
+$E=$E+$sasa[$x]*$N[$x][4];
+$x++;
+}
+print "solvation energy: ", $E, "\n";
+
+
+# Perl trim function to remove whitespace from the start and end of the string
+sub trim($)
+{
+	my $string = shift;
+	$string =~ s/^\s+//;
+	$string =~ s/\s+$//;
+	return $string;
+}
