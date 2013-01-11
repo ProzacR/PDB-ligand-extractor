@@ -19,17 +19,22 @@ $radii{'O'}=1.52;
 
 #solvation parameter
 $solv_par{'H'}=0;
-$solv_par{'C'}=12;
+$solv_par{'C'}=27;
 $solv_par{'N'}=-116;
 $solv_par{'O'}=-116;
 
 
+#H2O radius:
+$prad=1.4;
+
+
 ##read pdb file
-#take file name
+#take file name and solvation parameter try
 if (@ARGV == 1) {
-$file = $ARGV[0];
+ $file = $ARGV[0];
+ #$p = $ARGV[1]/10;
 } else {
-die("usage: read_pdb.pl file.pdb");
+ die("usage: read_pdb.pl file.pdb (#(par)/10)");
 }
 
 
@@ -39,7 +44,7 @@ while(<INFO>) {
  push (@lines, $_) if (!index($_, "HETATM") || !index($_, "ATOM"));
 }
 close(INFO);
-#print Dumper \@lines;
+#print STDERR Dumper \@lines;
 
 
 #split lines into symbols
@@ -48,7 +53,7 @@ while ($lines[$x]) {
 push @{$atoms[$x]}, split(//, $lines[$x]);;
 $x++;
 }
-#print Dumper \@atoms;
+#print STDERR Dumper \@atoms;
 
 
 #make formated hash:
@@ -106,11 +111,8 @@ $atom[$x]{'charge'} = join "", @{$atoms[$x]}[78..79];
 
 $x++;
 }
-#print Dumper \@atom;
+#print STDERR Dumper \@atom;
 
-
-#H2O radius:
-$prad=1.4;
 
 #tasku sk. aplink atomus (daugiau tiksliau: ~simtai):
 $M=5000;
@@ -120,11 +122,11 @@ $M=5000;
 #set atom new way, find radius
 $x = 0;
 while ($atom[$x]) {
-$N[$x] = [$atom[$x]{'x'},$atom[$x]{'y'},$atom[$x]{'z'},$radii{$atom[$x]{'element'}},$solv_par{$atom[$x]{'element'}}];
+$N[$x] = [$atom[$x]{'x'}, $atom[$x]{'y'}, $atom[$x]{'z'}, $radii{$atom[$x]{'element'}}, $solv_par{$atom[$x]{'element'}}];
 $x++;
 }
-#print Dumper \@N;
-
+#print STDERR Dumper \@N;
+#print STDERR $N[0][4];
 
 $i = 0;
 $irad = 0;
@@ -152,7 +154,7 @@ $k = 0;
 }
 
 #tasku visuma:
-#print Dumper \@pts;
+#print STDERR Dumper \@pts;
 
 #eit per atomus ir istrinti taskus kurie kito atomo kelyje:
 $i = 0;
@@ -182,17 +184,20 @@ while(@N[$i]) {
 $i++;
 $k = 0;
 }
-#print "sasa: \n";
-#print Dumper \@sasa;
+#print STDERR "sasa: \n";
+#print STDERR Dumper \@sasa;
 
 
 #solvation energy:
 $x=0;
-while ($sasa[$x]) {
+while (@sasa >= $x) {
 $E=$E+$sasa[$x]*$N[$x][4];
 $x++;
 }
-print "solvation energy: ", $E/1000, " kcal/mol\n";
+#print STDERR "x: ", $x, "\n";
+print "solvation energy: ";
+print $E/1000;
+print " kcal/mol\n";
 
 
 # Perl trim function to remove whitespace from the start and end of the string
