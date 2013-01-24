@@ -165,14 +165,14 @@ while(@N[$i]) {
  $Mp=$M;
  while ($k<$M) {
   $fail=0;
-  $j=$i+1;
+  $j=$i+1; #strange here...sometimes jumps over next while at all!!?
   while(@N[$j]) {
    $jrad=$N[$j][3] + $prad;
    $r=sqrt(( ($pts[$i][$k][0]-$N[$j][0])+($pts[$i][$k][1]-$N[$j][1])+($pts[$i][$k][2]-$N[$j][2]) )**2);
    if($r <= $jrad) {
     $fail=1;
    }
-  $j++;
+   $j++;
   }
   if($fail) {
    $Mp--;
