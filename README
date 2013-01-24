@@ -1,0 +1,11 @@
+#
+# VR
+#
+
+VR_sasa.pl - input pdb output SASA using Shrake-Rupley algorithm.
+
+isimti_ligandus.pl - input pdb output pdb of ligands excluding some in list.
+
+methane.pdb - example pdb file.
+
+read_pdb.pl - simple pdb file parser. Puts all data in $atom[number]{'property'} for futher calculations.
