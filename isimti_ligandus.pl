@@ -15,7 +15,7 @@ BME, HTS, TH0, TH7,
 #organomet:
 B30, AMS, BON,
 #per daug konformaciju
-0CR, 1CR, DT9, EG1, EG3, 4TR, MS4, O60,
+"0CR", "1CR", "DT9", "EG1", "EG3", "4TR", "MS4", "O60",
 #kt.:
 " BR", " CL", " CO", CO2, " CU", " MN", " NA", " NI", " OH",
 #a.r.:
