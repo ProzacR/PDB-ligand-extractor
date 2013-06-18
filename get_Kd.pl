@@ -28,4 +28,6 @@ foreach(@lines) {
 #print "$_\n";
 #}
 
+
+die "no data!" unless defined @data;
 print $id,",",$data[4],",",$data[10],"\n";
